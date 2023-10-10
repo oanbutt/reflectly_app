@@ -49,8 +49,8 @@ class _GeneralPageState extends State<GeneralPage> {
 
   int index = 0;
   List pages = [
-    CategoryPage(),
-    ThemePage(),
+    const CategoryPage(),
+    const ThemePage(),
   ];
 
   int selectedPage = 0;
@@ -59,7 +59,7 @@ class _GeneralPageState extends State<GeneralPage> {
     return Scaffold(
       backgroundColor: kbackGroundcolor,
         body:  SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -70,7 +70,7 @@ class _GeneralPageState extends State<GeneralPage> {
               children: [
           GestureDetector(
             onTap: (){
-              Navigator.pop(context, NavigationAnimate().createRoute(QuotePage(), Offset(0, -1)));
+              Navigator.pop(context, NavigationAnimate().createRoute(const QuotePage(), const Offset(0, -1)));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -79,7 +79,7 @@ class _GeneralPageState extends State<GeneralPage> {
               ),
                   width: 47,
                   height: 47,
-                  child: Icon(Icons.close)),
+                  child: const Icon(Icons.close)),
           ),
             ],
           ),
@@ -95,7 +95,7 @@ class _GeneralPageState extends State<GeneralPage> {
               height: height,
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.35),
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(50.0),
                 ),
               ),
@@ -103,7 +103,7 @@ class _GeneralPageState extends State<GeneralPage> {
                 children: [
                   AnimatedAlign(
                     alignment: Alignment(xAlign,0),
-                    duration: Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 200),
                     child: Container(
                       width: width * 0.5,
                       height: height,
@@ -117,7 +117,7 @@ class _GeneralPageState extends State<GeneralPage> {
                               kendGradient
                             ]
                         ),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(50.0),
                         ),
                       ),
@@ -137,7 +137,7 @@ class _GeneralPageState extends State<GeneralPage> {
                       });
                     },
                     child: Align(
-                      alignment: Alignment(-1, 0),
+                      alignment: const Alignment(-1, 0),
                       child: Container(
                         width: width * 0.5,
                         color: Colors.transparent,
@@ -166,7 +166,7 @@ class _GeneralPageState extends State<GeneralPage> {
                       });
                     },
                     child: Align(
-                      alignment: Alignment(1.3, 0),
+                      alignment: const Alignment(1.3, 0),
                       child: Container(
                         width: width * 0.6,
                         color: Colors.transparent,
@@ -190,10 +190,10 @@ class _GeneralPageState extends State<GeneralPage> {
       ),
 
               selectedPage == 0 ? SlideInLeft(
-                duration: Duration(milliseconds: 350),
+                duration: const Duration(milliseconds: 350),
                   child:  pages[selectedPage]):
               SlideInRight(
-                duration: Duration(milliseconds: 350),
+                duration: const Duration(milliseconds: 350),
                   child: pages[selectedPage]),
     ]
     ),

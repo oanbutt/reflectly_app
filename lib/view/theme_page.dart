@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:js_interop';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+
+
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});
 
@@ -79,8 +80,11 @@ class _ThemePageState extends State<ThemePage>{
                     ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                       child: CachedNetworkImage(
-                        fadeInCurve: Curves.easeIn,
-                        fadeInDuration: Duration(milliseconds: 400),
+                        fadeInCurve: Curves.easeInQuad,
+                        fadeInDuration: Duration(milliseconds: 650),
+                        fadeOutCurve: Curves.easeOut,
+                        fadeOutDuration: Duration(milliseconds: 650),
+                        useOldImageOnUrlChange: true,
                         imageUrl: imagesList[currentImageindex],
                         fit: BoxFit.cover,
                         errorWidget: (context, url, error) => Icon(Icons.error),

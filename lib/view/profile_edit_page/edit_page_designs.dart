@@ -10,7 +10,7 @@ import '../constants.dart';
 // THIS IS THE LAST TEXT CONTAINERS IN THE EDIT PROFILE PAGE
 
 class TextChangeContainer extends StatelessWidget {
-  TextChangeContainer({required this.text});
+  TextChangeContainer({super.key, required this.text});
 
   late String text;
 
@@ -125,7 +125,7 @@ class EditPageContainer extends StatefulWidget {
   bool isSwitched;
   late final Icon icon;
 
-  EditPageContainer({
+  EditPageContainer({super.key,
     required this.title,
     required this.subtitle,
     required this.isSwitched,
@@ -216,7 +216,7 @@ class EditPageContainer2 extends StatefulWidget {
   bool isSwitched;
   final Icon icon;
 
-  EditPageContainer2({
+  EditPageContainer2({super.key,
     required this.title,
     required this.subtitle,
     required this.isSwitched,
@@ -309,7 +309,7 @@ class DoubleContainer extends StatefulWidget {
   bool isSwitched;
   final Icon icon;
 
-  DoubleContainer({
+  DoubleContainer({super.key,
     required this.title,
     required this.subtitle,
     required this.isSwitched,
@@ -483,7 +483,7 @@ class DoubleContainer2 extends StatefulWidget {
   bool isSwitched;
   final Icon icon;
 
-  DoubleContainer2({
+  DoubleContainer2({super.key,
     required this.title,
     required this.subtitle,
     required this.isSwitched,
@@ -768,7 +768,7 @@ class _ColorContainerState extends State<ColorContainer> {
 
 class ColorChangers extends StatefulWidget {
   ColorChangers(
-      {required this.newStart,
+      {super.key, required this.newStart,
         required this.newMid,
         required this.newEnd,
         required this.index});

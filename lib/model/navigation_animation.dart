@@ -4,7 +4,7 @@ class NavigationAnimate {
 
   Route createRoute(dynamic pageName, Offset status) {
     return PageRouteBuilder(
-      transitionDuration: Duration(milliseconds: 600),
+      transitionDuration: const Duration(milliseconds: 600),
       pageBuilder: (context, animation, secondaryAnimation) =>  pageName,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
          var begin = status;
