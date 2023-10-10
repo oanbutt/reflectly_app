@@ -7,7 +7,7 @@ import '../model/color_function.dart';
 // THIS DESIGN IS USED FOR ALL THE NAVIGATING BUTTONS AT THE TOP
 
 class TopButtons extends StatelessWidget {
-  TopButtons({required this.icon, required this.function});
+  TopButtons({super.key, required this.icon, required this.function});
 
   late Icon icon;
   final VoidCallback function;
