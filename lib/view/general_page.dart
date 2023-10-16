@@ -57,7 +57,7 @@ class _GeneralPageState extends State<GeneralPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kbackGroundcolor,
+      // backgroundColor: kbackGroundcolor,
         body:  SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
