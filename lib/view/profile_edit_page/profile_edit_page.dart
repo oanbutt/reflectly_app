@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:reflectly/model/color_container_controller.dart';
 import 'package:reflectly/view/constants.dart';
 import 'package:reflectly/view/buttons.dart';
+import '../../model/image_picker_controller.dart';
 import '../../widgets/color_container_function.dart';
 import 'edit_page_designs.dart';
+import 'package:get/get.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
@@ -15,20 +19,22 @@ class EditPage extends StatefulWidget {
 
 class _EditPageState extends State<EditPage> {
 
+  MyImagePicker controller = Get.put(MyImagePicker());
+  MyColorContainer colorController = Get.put(MyColorContainer());
 
   late bool isSwitched = false;
   double value = 50;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kbackGroundcolor,
+      backgroundColor: context.isDarkMode ? Color(0xff121212) : kbackGroundcolor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 85,
         elevation: 0,
           automaticallyImplyLeading: false,
-          title: TopButtons(icon: const Icon(Icons.arrow_back_rounded,size: 30,color: Colors.black,),function: (){
+          title: TopButtons(icon: Icon(Icons.arrow_back_rounded,size: 30,color: context.isDarkMode ? Colors.white:Colors.black,),function: (){
             // Navigator.pop(context);
             Navigator.pop(context);
           },)
@@ -37,7 +43,7 @@ class _EditPageState extends State<EditPage> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          color: kbackGroundcolor,
+          color: context.isDarkMode ? Color(0xff121212) : kbackGroundcolor,
           child: Padding(
             padding: const EdgeInsets.all(23),
             child: Column(
@@ -49,31 +55,35 @@ class _EditPageState extends State<EditPage> {
                       elevation: 15,
                       borderRadius: BorderRadius.circular(12),
                       shadowColor: Colors.black.withOpacity(0.6),
-                      child: Container(
-                        width: 160,
-                        height: 160,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                              colors: [
-                                kstartGradient,
-                                kmidGradient,
-                                kendGradient
-                              ]),
-                      ),
-                        child: Icon(Icons.camera_alt_outlined,size: 70,color: Colors.blueGrey.withOpacity(0.15),),
-                      ),
+                      child: Obx(() {
+                        return Container(
+                          width: 160,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                                colors: [
+                                  colorController.startColor.value,
+                                  colorController.midColor.value,
+                                  colorController.endColor.value
+                                ]),
+                          ),
+                          child: controller.imagePath.isEmpty ? Icon(Icons.camera_alt_outlined,size: 70,color: Colors.blueGrey.withOpacity(0.15),) : controller.imagePath.value.isEmpty ? CircularProgressIndicator() : ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.file(File(controller.imagePath.value), fit: BoxFit.cover,)) ,
+                        );
+                      })
                     ),
                   ],
                 ),
                 const SizedBox(height: 30,),
                 const TextFieldContainer(),
                 const SizedBox(height: 20,),
-                EditPageContainer(title: 'Disabled', subtitle: 'BIOMETRIC PASSWORD',isSwitched: false,icon: const Icon(Icons.lock_open_outlined,color: Colors.black,),bgIcon: Icon(Icons.fingerprint_sharp,size: 145,color: Colors.grey.withOpacity(0.05),),),
+                EditPageContainer(title: 'Disabled', subtitle: 'BIOMETRIC PASSWORD',isSwitched: false,icon: const Icon(Icons.lock_open_outlined,color: Colors.black,),bgIcon: Icon(Icons.fingerprint_sharp,size: 145,color: Colors.grey.withOpacity(0.05),)),
                 const SizedBox(height: 20,),
-                EditPageContainer(title: 'Disabled', subtitle: 'DARK MODE',isSwitched: false,icon: const Icon(Icons.lightbulb_outline,color: Colors.black,),bgIcon: Icon(Icons.lightbulb_outline,size: 145,color: Colors.grey.withOpacity(0.05),),),
+                EditPageContainer2(title:  context.isDarkMode ? 'Enabled':'Disabled', subtitle: 'DARK MODE',isSwitched: context.isDarkMode,icon: const Icon(Icons.lightbulb_outline,color: Colors.black,),bgIcon: Icon(Icons.lightbulb_outline,size: 145,color: Colors.grey.withOpacity(0.05),)),
                 const SizedBox(height: 20,),
                 DoubleContainer(title: 'Disabled', subtitle: 'CHECK-IN REMINDERS', isSwitched: isSwitched, icon: const Icon(Icons.notifications_none_outlined,color: Colors.black,)),
                 const SizedBox(height: 20,),
@@ -83,29 +93,30 @@ class _EditPageState extends State<EditPage> {
                 const SizedBox(height: 20,),
                 TextChangeContainer(text: 'Add custom feelings by selecting other when creating a moment',),
                 const SizedBox(height: 20,),
-                ColorContainer(onUpdate: () => setState(() {
-                }),),
+                ColorContainer(),
                 Padding(
                   padding: const EdgeInsets.only(top: 24,left: 13,right: 13),
                   child: Material(
                     elevation: 15,
                     borderRadius:BorderRadius.circular(50) ,
                     shadowColor: Colors.black.withOpacity(0.6),
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                        gradient: LinearGradient(
-                            colors: [
-                              kstartGradient,
-                              kmidGradient,
-                              kendGradient
-                            ]
+                    child: Obx(() {
+                      return Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            gradient: LinearGradient(
+                                colors: [
+                                  colorController.startColor.value,
+                                  colorController.midColor.value,
+                                  colorController.endColor.value
+                                ]
 
-                        )
-                      ),
-                      child: const Center(child: Text('SIGN OUT',style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.w600),)),
-                    ),
+                            )
+                        ),
+                        child: const Center(child: Text('SIGN OUT',style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.w600),)),
+                      );
+                    })
                   ),
                 ),
                 const SizedBox(height: 30,),

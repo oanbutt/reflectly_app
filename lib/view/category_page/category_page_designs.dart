@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:reflectly/model/color_container_controller.dart';
 
 import '../constants.dart';
 
@@ -24,18 +25,27 @@ class CategoriesText extends StatelessWidget {
 // containers in the category page in general
 
 class CategoriesContainer extends StatefulWidget {
-  CategoriesContainer({required this.title, required this.imagecode});
+  CategoriesContainer(
+      {required this.title,
+      required this.imagecode,
+      this.isTapped = false,
+      required this.onClick,
+      required this.itemName});
 
-  late String title;
-  late String imagecode;
+  final String title;
+  final String imagecode;
+  final bool isTapped;
+  final VoidCallback onClick;
+  final String itemName;
 
   @override
   State<CategoriesContainer> createState() => _CategoriesContainerState();
 }
 
 class _CategoriesContainerState extends State<CategoriesContainer> {
+  MyColorContainer colorController = Get.put(MyColorContainer());
 
-  Container ticker(){
+  Container ticker() {
     return Container(
         width: 30,
         height: 30,
@@ -43,13 +53,41 @@ class _CategoriesContainerState extends State<CategoriesContainer> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(11),
         ),
-
-        child: Icon(Icons.done,size: 20,color: kmidGradient,));
+        child: Icon(
+          Icons.done,
+          size: 20,
+          color: kmidGradient,
+        ));
   }
 
-  bool isTouched = false;
+  Container locker() {
+    return Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(11),
+        ),
+        child: Icon(
+          Icons.lock,
+          size: 20,
+          color: kmidGradient,
+        ));
+  }
+
+  Set<String> tappableList = {
+    'General',
+    'Positive Thinking',
+    'Sadness',
+    'Love Yourself',
+    'Short Quotes',
+    'Favorites'
+  };
   @override
   Widget build(BuildContext context) {
+    widget.isTapped
+        ? categorycontainer = colorController.endColor.value
+        : categorycontainer = Colors.blue.withOpacity(0.2);
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Material(
@@ -59,13 +97,18 @@ class _CategoriesContainerState extends State<CategoriesContainer> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: GestureDetector(
-            onTap: (){
-              setState(() {
-                isTouched = !isTouched;
-                isTouched == true ? categorycontainer = kendGradient : categorycontainer = Colors.blue.withOpacity(0.2);
-
-              });
-
+            onTap: () {
+              if (tappableList.contains(widget.itemName)) {
+                widget.onClick();
+              } else {
+                Get.snackbar(
+                  'Warning',
+                  'List is currently empty',
+                  colorText: Colors.white,
+                  backgroundColor: colorController.midColor.value,
+                  icon: Icon(Icons.warning_amber),
+                );
+              }
             },
             child: Container(
                 width: 160,
@@ -77,7 +120,8 @@ class _CategoriesContainerState extends State<CategoriesContainer> {
                 child: Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
                       child: Text(
                         widget.title,
                         style: TextStyle(
@@ -93,9 +137,7 @@ class _CategoriesContainerState extends State<CategoriesContainer> {
                             height: 67,
                             decoration: BoxDecoration(
                                 color: Colors.lightBlueAccent,
-                                borderRadius: BorderRadius.circular(
-                                    22
-                                )),
+                                borderRadius: BorderRadius.circular(22)),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(22),
                               child: Transform.rotate(
@@ -109,17 +151,18 @@ class _CategoriesContainerState extends State<CategoriesContainer> {
                                   ),
                                 ),
                               ),
-                            )
-                        ),
+                            )),
                       ),
                     ),
-                    isTouched == true ? Transform.translate(
-
-                        offset: Offset(117, 12),
-                        child: ticker()): SizedBox(),
+                    !widget.isTapped && !tappableList.contains(widget.itemName)
+                        ? Transform.translate(
+                            offset: Offset(117, 12), child: locker())
+                        : widget.isTapped
+                            ? Transform.translate(
+                                offset: Offset(117, 12), child: ticker())
+                            : SizedBox(),
                   ],
-                )
-            ),
+                )),
           ),
         ),
       ),

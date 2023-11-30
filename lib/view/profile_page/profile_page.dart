@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:reflectly/model/color_container_controller.dart';
 import 'package:reflectly/model/navigation_animation.dart';
 import 'package:reflectly/view/constants.dart';
 import 'package:reflectly/view/buttons.dart';
@@ -6,6 +8,8 @@ import 'package:reflectly/view/profile_edit_page/profile_edit_page.dart';
 import 'package:reflectly/view/profile_page/profile_page_designs.dart';
 import 'package:reflectly/view/quote_page.dart';
 import 'package:delayed_display/delayed_display.dart';
+import 'dart:io';
+import '../../model/image_picker_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -13,7 +17,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  @override
+
+  MyImagePicker controller = Get.put(MyImagePicker());
+  MyColorContainer colorController = Get.put(MyColorContainer());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ]
       ),
       body: Container(
-        color: kbackGroundcolor,
+        color: context.isDarkMode ? Color(0xff121212) : kbackGroundcolor,
         child: Column(
             children: [
           Row(
@@ -38,24 +45,36 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: AnimatedOpacity(
                   opacity: 1.0,
                   duration: const Duration(seconds: 1),
-                  child: Container(
-                    width: 185,
-                    height: 165,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.only(bottomRight: Radius.circular(20)),
-                      gradient: LinearGradient(
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                          colors: [kstartGradient, kmidGradient, kendGradient]),
-                    ),
-                    child: Icon(
-                      Icons.account_circle_outlined,
-                      size: 100,
-                      color: Colors.blueGrey.withOpacity(0.15),
-                    ),
-                  ),
-                ),
+                  child: Obx(() {
+                    return Container(
+                      width: 185,
+                      height: 165,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        const BorderRadius.only(bottomRight: Radius.circular(20)),
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            colors: [
+                              colorController.startColor.value,
+                              colorController.midColor.value,
+                              colorController.endColor.value
+                            ]),
+                      ),
+                      child:controller.imagePath.isEmpty ? Icon(
+                        Icons.account_circle_outlined,
+                        size: 100,
+                        color: Colors.blueGrey.withOpacity(0.15),
+                      ) : controller.imagePath.value.isEmpty ? CircularProgressIndicator() : ClipRRect(
+                        borderRadius:
+                        const BorderRadius.only(bottomRight: Radius.circular(20)),
+                        child: Image.file(File(controller.imagePath.value), fit: BoxFit.cover,
+
+                        ),
+                      ),
+                    );
+                  })
+              ),
               ),
               const SizedBox(width: 12,),
               const DelayedDisplay(
@@ -74,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           const SizedBox(height: 20,),
           Padding(
-            padding: const EdgeInsets.only(left: 15,right: 15),
+            padding:  EdgeInsets.only(left: 15,right: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -87,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: 'Reflectly Basic', subtitle: 'ACTIVE PLAN')),
                 ),
                 const SizedBox(height: 20,),
-                const DelayedDisplay(
+                 DelayedDisplay(
                   delay: Duration(milliseconds: 600),
                   child: AnimatedOpacity(
                     opacity: 1.0,
@@ -121,10 +140,10 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TopButtons(
-                icon: const Icon(
+                icon:  Icon(
                   Icons.edit,
                   size: 30,
-                  color: Colors.black,
+                  color: context.isDarkMode ? Colors.white:Colors.black,
                 ),
                 function: () {
                   Navigator.push(
@@ -133,19 +152,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       EditPage(),
                       const Offset(1, 0),
                     ),
-                  ).whenComplete(
-                        () => setState(() {}),
                   );
                 }),
             const SizedBox(width: 9,),
             TopButtons(
-              icon: const Icon(
+              icon:  Icon(
                 Icons.close,
                 size: 30,
-                color: Colors.black,
+                color: context.isDarkMode ? Colors.white:Colors.black,
               ),
               function: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     NavigationAnimate().createRoute(
                         const QuotePage(),

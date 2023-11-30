@@ -40,9 +40,25 @@ dependencies:
   google_fonts: ^6.1.0
   delayed_display:
   animate_do:
-  flutter_blurhash: ^0.7.0
+  flutter_blurhash: ^0.8.2
   flutter_svg: ^2.0.7
   cached_network_image: ^3.3.0
+  get: ^4.6.6
+  image_picker: ^1.0.4
+  shared_preferences: ^2.2.2
+  firebase_core: ^2.20.0
+  cloud_firestore: ^4.12.1
+  firebase_storage: ^11.4.0
+  screenshot: ^2.1.0
+  image_gallery_saver: ^2.0.3
+  permission_handler: ^11.0.1
+  share_plus: ^7.2.1
+  path_provider: ^2.1.1
+  timezone: ^0.9.2
+  flutter_local_notifications: ^16.1.0
+  device_info_plus: ^9.1.1
+  android_id: ^0.3.6
+
 
 
 
@@ -55,7 +71,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
