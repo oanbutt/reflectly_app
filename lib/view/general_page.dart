@@ -1,5 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:reflectly/model/color_container_controller.dart';
 import 'package:reflectly/model/navigation_animation.dart';
 import 'package:reflectly/view/constants.dart';
 import 'package:reflectly/view/quote_page.dart';
@@ -54,6 +56,8 @@ class _GeneralPageState extends State<GeneralPage> {
   ];
 
   int selectedPage = 0;
+
+  MyColorContainer colorController = Get.put(MyColorContainer());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,24 +108,26 @@ class _GeneralPageState extends State<GeneralPage> {
                   AnimatedAlign(
                     alignment: Alignment(xAlign,0),
                     duration: const Duration(milliseconds: 200),
-                    child: Container(
-                      width: width * 0.5,
-                      height: height,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            colors: [
-                              kstartGradient,
-                              kmidGradient,
-                              kendGradient
-                            ]
+                    child: Obx(() {
+                      return Container(
+                        width: width * 0.5,
+                        height: height,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [
+                                colorController.startColor.value,
+                                colorController.midColor.value,
+                                colorController.endColor.value
+                              ]
+                          ),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(50.0),
+                          ),
                         ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(50.0),
-                        ),
-                      ),
-                    ),
+                      );
+                    })
                   ),
                   GestureDetector(
                     onTap: () {

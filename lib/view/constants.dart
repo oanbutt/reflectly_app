@@ -8,6 +8,7 @@ Color categorycontainer = Colors.blue.withOpacity(0.2);
 
 const kbackGroundcolor = Color(0xffF2F7FB);
 
+
  Color kstartGradient = Color(0xfff3206b) ;
  Color kmidGradient = Color(0xfff6518b);
  Color kendGradient  = Color(0xfff881ab);

@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-
 // THIS DESIGN IS USED FOR ALL THE NAVIGATING BUTTONS AT THE TOP
 
 class TopButtons extends StatelessWidget {
@@ -22,8 +21,6 @@ class TopButtons extends StatelessWidget {
             width: 43,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.white,
-               // color:  Colors.blue.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: icon),
@@ -31,7 +28,3 @@ class TopButtons extends StatelessWidget {
     );
   }
 }
-
-
-
-

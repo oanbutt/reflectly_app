@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "723026695125",
+    "project_id": "reflectly-c336a",
+    "storage_bucket": "reflectly-c336a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723026695125:android:ab94e4871eb9a4ea1aa35c",
+        "android_client_info": {
+          "package_name": "com.example.reflectly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCGdH8BtYjzAmCMXNqtTwA5YgEAeof0n0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
